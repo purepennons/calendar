@@ -1,3 +1,3 @@
 module.exports = {
-  components: 'src/components/**/*.js',
+  components: 'src/components/**/[A-Z]*.{js,jsx}',
 }
