@@ -12,6 +12,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -34,7 +36,8 @@
   "devDependencies": {
     "husky": ">=1",
     "lint-staged": ">=8",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "react-styleguidist": "^10.3.2"
   },
   "husky": {
     "hooks": {
