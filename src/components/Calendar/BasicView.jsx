@@ -24,7 +24,7 @@ const propTypes = {
       isMarked: PropTypes.bool,
     })
   ).isRequired,
-  onChange: PropTypes.func,
+  onSelect: PropTypes.func,
   onNextClick: PropTypes.func,
   onPrevClick: PropTypes.func,
   onTitleClick: PropTypes.func,
@@ -33,7 +33,7 @@ const propTypes = {
 const defaultProps = {
   className: '',
   headers: [],
-  onChange: noop,
+  onSelect: noop,
   onNextClick: noop,
   onPrevClick: noop,
   onTitleClick: noop,
@@ -51,11 +51,11 @@ function UnStyledBasicView(props) {
     groupName,
     headers,
     nodes,
-    onChange,
+    onSelect,
   } = props
   const maxNodes = columns * rows
   const onNodeChange = event => {
-    onChange(event.target.value)
+    onSelect(event.target.value)
   }
 
   return (

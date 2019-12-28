@@ -10,6 +10,6 @@ const nodes = range(1, 42 + 1).map(v => ({ value: v, label: String(v) }))
   rows={6}
   headers={headers}
   nodes={nodes}
-  onNodeClick={v => console.log('value clicked', v)}
+  onSelect={v => console.log('value clicked', v)}
 />
 ```
