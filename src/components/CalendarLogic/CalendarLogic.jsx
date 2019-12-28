@@ -1,9 +1,9 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
 import { noop } from 'lodash'
-import { setDate, setMonth, setYear, isEqual as isDateEqual } from 'date-fns'
+import { setDate, setMonth, setYear, isSameDay } from 'date-fns'
 
-import { getDateNodes } from './utils'
+import { getDateNodes, getMonthNodes, getYearNodes } from './utils'
 
 class CalendarLogic extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class CalendarLogic extends Component {
 
   componentDidUpdate(prevProps) {
     const { value } = this.props
-    if (!isDateEqual(value, prevProps.value)) {
+    if (!isSameDay(value, prevProps.value)) {
       this.setState(this.getDefaultState())
     }
   }
@@ -51,6 +51,8 @@ class CalendarLogic extends Component {
         setMonth: this.setMonth,
         setDate: this.setDate,
         getDateNodes: this.getDateNodes,
+        getMonthNodes: this.getMonthNodes,
+        getYearNodes: this.getYearNodes,
         onSelect: this.onSelect,
       },
     }
@@ -58,6 +60,14 @@ class CalendarLogic extends Component {
 
   getDateNodes = ({ maxNodes }) => {
     return getDateNodes(this.state.internalDate, { maxNodes })
+  }
+
+  getMonthNodes = () => {
+    return getMonthNodes()
+  }
+
+  getYearNodes = ({ maxNodes, period }) => {
+    return getYearNodes(this.state.internalDate, { maxNodes, period })
   }
 
   setYear = value => {

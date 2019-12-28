@@ -1,6 +1,16 @@
 import { range } from 'lodash'
-import { pipe, slice } from 'lodash/fp'
-import { getDaysInMonth, getYear, getDay, addMonths, addYears } from 'date-fns'
+import { pipe, slice, map } from 'lodash/fp'
+import {
+  getDaysInMonth,
+  getYear,
+  getDate,
+  getDay,
+  addMonths,
+  addYears,
+} from 'date-fns'
+
+const today = new Date()
+const dateOfToday = getDate(today)
 
 // basic date utils
 export function rangeIncludeLast(start, end) {
@@ -77,7 +87,12 @@ export function getNextDateNodes({
 }
 
 export function getCurrentDateNodes({ currDateList }) {
-  return pipe(convertListToNode)(currDateList)
+  return pipe(
+    convertListToNode,
+    map(node =>
+      dateOfToday === node.value ? { ...node, isMarked: true } : node
+    )
+  )(currDateList)
 }
 
 export function getDateNodes(date, { maxNodes }) {
@@ -97,6 +112,35 @@ export function getDateNodes(date, { maxNodes }) {
     startIndex,
     maxNodes,
   })
+
+  return prevNodes.concat(currentNodes).concat(nextNodes)
+}
+
+// CalendarLogic - month
+export function getMonthNodes() {
+  return convertListToNode(getMonthList())
+}
+
+// CalendarLogic - year
+export function getYearNodes(date, { maxNodes, period = 10 }) {
+  const {
+    prev: prevYearList,
+    curr: currYearList,
+    next: nextYearList,
+  } = getYearListPair(date, { period })
+  const numOfLeftSideDisabled = Math.floor((maxNodes - currYearList.length) / 2)
+  const prevNodes = pipe(
+    convertListToNode,
+    slice(prevYearList.length - numOfLeftSideDisabled, prevYearList.length),
+    disableList
+  )(prevYearList)
+
+  const currentNodes = convertListToNode(currYearList)
+  const nextNodes = pipe(
+    convertListToNode,
+    slice(0, maxNodes - currYearList.length - numOfLeftSideDisabled),
+    disableList
+  )(nextYearList)
 
   return prevNodes.concat(currentNodes).concat(nextNodes)
 }
