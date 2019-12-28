@@ -6,15 +6,6 @@ import { noop, toArray } from 'lodash'
 import Node from './Node'
 import CalendarWrapper from './CalendarWrapper'
 
-const nodeShape = {
-  id: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  label: PropTypes.string,
-  disabled: PropTypes.bool,
-  isActive: PropTypes.bool,
-  isMarked: PropTypes.bool,
-}
-
 const propTypes = {
   className: PropTypes.string,
   columns: PropTypes.number.isRequired,
@@ -22,7 +13,17 @@ const propTypes = {
   groupName: PropTypes.string.isRequired,
   headers: PropTypes.arrayOf(PropTypes.string),
   /** Only pick the first `${columns * rows}` elements. */
-  nodes: PropTypes.arrayOf(nodeShape).isRequired,
+  nodes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
+      label: PropTypes.string,
+      disabled: PropTypes.bool,
+      isActive: PropTypes.bool,
+      isMarked: PropTypes.bool,
+    })
+  ).isRequired,
   onChange: PropTypes.func,
   onNextClick: PropTypes.func,
   onPrevClick: PropTypes.func,
