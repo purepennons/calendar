@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { noop } from 'lodash'
 import { setDate, setMonth, setYear, isEqual as isDateEqual } from 'date-fns'
 
-import { getDateListPair, getMonthListPair, getYearListPair } from './utils'
+import { getDateNodes } from './utils'
 
 class CalendarLogic extends Component {
   constructor(props) {
@@ -24,6 +24,14 @@ class CalendarLogic extends Component {
     this.isUnmounted = true
   }
 
+  safeSetState = (...args) => {
+    if (this.isUnmounted) {
+      return
+    }
+
+    this.setState(...args)
+  }
+
   getDefaultState = () => {
     const { value, defaultValue } = this.props
     return {
@@ -32,36 +40,24 @@ class CalendarLogic extends Component {
   }
 
   getRenderProps = () => {
-    const { value: date, yearPeriod: period } = this.props
+    const { value: date } = this.props
     const { internalDate } = this.state
 
     return {
       date,
       internalDate,
-      year: {
-        ...getYearListPair(internalDate, { period }),
-      },
-      month: {
-        ...getMonthListPair(),
-      },
-      day: {
-        ...getDateListPair(internalDate),
-      },
       handlers: {
         setYear: this.setYear,
         setMonth: this.setMonth,
         setDate: this.setDate,
+        getDateNodes: this.getDateNodes,
         onSelect: this.onSelect,
       },
     }
   }
 
-  safeSetState = (...args) => {
-    if (this.isUnmounted) {
-      return
-    }
-
-    this.setState(...args)
+  getDateNodes = ({ maxNodes }) => {
+    return getDateNodes(this.state.internalDate, { maxNodes })
   }
 
   setYear = value => {
@@ -95,12 +91,10 @@ CalendarLogic.propTypes = {
   children: PropTypes.func.isRequired,
   defaultValue: PropTypes.instanceOf(Date),
   value: PropTypes.instanceOf(Date),
-  yearPeriod: PropTypes.number,
   onChange: PropTypes.func,
 }
 
 CalendarLogic.defaultProps = {
-  yearPeriod: 10,
   onChange: noop,
 }
 
