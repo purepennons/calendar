@@ -4,7 +4,6 @@ import {
   getMonthList,
   getYearList,
   getDateListPair,
-  getMonthListPair,
   getYearListPair,
 } from '../utils'
 
