@@ -7,8 +7,6 @@ import { noop } from 'lodash'
 import constants from '../../constants/'
 import BasicView from './BasicView'
 
-const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-
 const propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
@@ -38,11 +36,11 @@ const defaultProps = {
   onTitleClick: noop,
 }
 
-function UnStyledDateView(props) {
+function UnStyledMonthView(props) {
   const {
     className,
-    name,
     date,
+    name,
     nodes,
     onSelect,
     onPrev,
@@ -51,12 +49,11 @@ function UnStyledDateView(props) {
   } = props
   return (
     <BasicView
-      title={format(date, 'MMM yyyy')}
-      groupName={`date-view-${name}`}
+      title={format(date, 'yyyy')}
+      groupName={`month-view-${name}`}
       className={className}
-      columns={constants.DATE_COLUMNS}
-      rows={constants.DATE_ROWS}
-      headers={DAYS}
+      columns={constants.MONTH_COLUMNS}
+      rows={constants.MONTH_ROWS}
       nodes={nodes}
       onSelect={onSelect}
       onPrevClick={onPrev}
@@ -66,13 +63,13 @@ function UnStyledDateView(props) {
   )
 }
 
-UnStyledDateView.propTypes = propTypes
-UnStyledDateView.defaultProps = defaultProps
+UnStyledMonthView.propTypes = propTypes
+UnStyledMonthView.defaultProps = defaultProps
 
-const DateView = styled(UnStyledDateView)``
+const MonthView = styled(UnStyledMonthView)``
 
-DateView.propTypes = propTypes
-DateView.defaultProps = defaultProps
+MonthView.propTypes = propTypes
+MonthView.defaultProps = defaultProps
 
 /** @component */
-export default DateView
+export default MonthView

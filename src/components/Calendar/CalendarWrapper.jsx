@@ -6,7 +6,7 @@ import { noop } from 'lodash'
 const propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   onPrevClick: PropTypes.func,
   onNextClick: PropTypes.func,
   onTitleClick: PropTypes.func,
@@ -24,20 +24,25 @@ function UnStyledCalendarWrapper(props) {
   return (
     <div className={className}>
       <div className="navigator">
-        <button
-          className="navigator__arrow"
-          onClick={onPrevClick}
-        >{`<`}</button>
-        <button className="navigator__title" onClick={onTitleClick}>
-          {title}
-        </button>
-        <button
-          className="navigator__arrow"
-          onClick={onNextClick}
-        >{`>`}</button>
+        {onPrevClick && (
+          <button
+            className="navigator__arrow"
+            onClick={onPrevClick}
+          >{`<`}</button>
+        )}
+        {title && (
+          <button className="navigator__title" onClick={onTitleClick}>
+            {title}
+          </button>
+        )}
+        {onNextClick && (
+          <button
+            className="navigator__arrow"
+            onClick={onNextClick}
+          >{`>`}</button>
+        )}
       </div>
       {props.children}
-      <div>Button Groups</div>
     </div>
   )
 }

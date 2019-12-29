@@ -6,7 +6,7 @@ import { noop } from 'lodash'
 const propTypes = {
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.any.isRequired,
   label: PropTypes.string,
   isActive: PropTypes.bool,
   isMarked: PropTypes.bool,

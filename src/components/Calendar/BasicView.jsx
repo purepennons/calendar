@@ -17,8 +17,7 @@ const propTypes = {
   nodes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
+      value: PropTypes.any.isRequired,
       label: PropTypes.string,
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,

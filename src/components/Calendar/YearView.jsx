@@ -2,12 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { format } from 'date-fns'
-import { noop } from 'lodash'
+import { noop, last, first } from 'lodash'
 
 import constants from '../../constants/'
 import BasicView from './BasicView'
-
-const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 
 const propTypes = {
   className: PropTypes.string,
@@ -38,11 +36,22 @@ const defaultProps = {
   onTitleClick: noop,
 }
 
-function UnStyledDateView(props) {
+function getTitle(nodes) {
+  const activedNodes = nodes.filter(node => !node.disabled)
+  if (activedNodes.length < 2) {
+    return ''
+  }
+
+  return `${format(first(activedNodes).value, 'yyyy')}-${format(
+    last(activedNodes).value,
+    'yyyy'
+  )}`
+}
+
+function UnStyledYearView(props) {
   const {
     className,
     name,
-    date,
     nodes,
     onSelect,
     onPrev,
@@ -51,12 +60,11 @@ function UnStyledDateView(props) {
   } = props
   return (
     <BasicView
-      title={format(date, 'MMM yyyy')}
-      groupName={`date-view-${name}`}
+      title={getTitle(nodes)}
+      groupName={`month-view-${name}`}
       className={className}
-      columns={constants.DATE_COLUMNS}
-      rows={constants.DATE_ROWS}
-      headers={DAYS}
+      columns={constants.YEAR_COLUMNS}
+      rows={constants.YEAR_ROWS}
       nodes={nodes}
       onSelect={onSelect}
       onPrevClick={onPrev}
@@ -66,13 +74,13 @@ function UnStyledDateView(props) {
   )
 }
 
-UnStyledDateView.propTypes = propTypes
-UnStyledDateView.defaultProps = defaultProps
+UnStyledYearView.propTypes = propTypes
+UnStyledYearView.defaultProps = defaultProps
 
-const DateView = styled(UnStyledDateView)``
+const YearView = styled(UnStyledYearView)``
 
-DateView.propTypes = propTypes
-DateView.defaultProps = defaultProps
+YearView.propTypes = propTypes
+YearView.defaultProps = defaultProps
 
 /** @component */
-export default DateView
+export default YearView
