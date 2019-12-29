@@ -11,8 +11,8 @@ describe('get list', () => {
 
   describe('getMonthList', () => {
     it('should always return a month list which contains all months', () => {
-      expect(getMonthList(new Date('2019-12-26'))).toEqual(range(1, 12 + 1))
-      expect(getMonthList(new Date('2020-02-01'))).toEqual(range(1, 12 + 1))
+      expect(getMonthList(new Date('2019-12-26'))).toEqual(range(0, 12))
+      expect(getMonthList(new Date('2020-02-01'))).toEqual(range(0, 12))
     })
   })
 

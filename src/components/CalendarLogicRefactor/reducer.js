@@ -18,6 +18,24 @@ function reducer(state, event) {
             status: stateTypes.dateView,
             context: actions.selectDate(context, event),
           }
+        case eventTypes.GO_NEXT_MONTH:
+          return {
+            status: stateTypes.dateView,
+            context: actions.goMonth(context, { ...event, offset: 1 }),
+          }
+        case eventTypes.GO_PREV_MONTH:
+          return {
+            status: stateTypes.dateView,
+            context: actions.goMonth(context, { ...event, offset: -1 }),
+          }
+        case eventTypes.GO_MONTH_VIEW:
+          return {
+            status: stateTypes.monthView,
+            context: actions.recalculateNodes(context, {
+              ...event,
+              status: stateTypes.monthView,
+            }),
+          }
         default:
           return state
       }

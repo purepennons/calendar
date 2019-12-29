@@ -36,7 +36,7 @@ export function getDateList(date) {
 }
 
 export function getMonthList() {
-  return rangeIncludeLast(1, 12)
+  return range(0, 12)
 }
 
 export function getYearList(date, { period = 10 } = { period: 10 }) {
@@ -151,4 +151,9 @@ export function getDateNodes(date, { maxNodes, selectedDate }) {
   })
 
   return prevNodes.concat(currentNodes).concat(nextNodes)
+}
+
+// CalendarLogic - month
+export function getMonthNodes(date) {
+  return convertListToNode(formatTokenMap.month, getDatesFromMonthList(date))
 }
