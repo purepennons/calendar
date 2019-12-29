@@ -86,7 +86,7 @@ function reducer(state, event) {
         case eventTypes.GO_PREV_PERIOD:
           return {
             status: stateTypes.yearView,
-            context: actions.goPeriod(context, { ...event, offset: 1 }),
+            context: actions.goPeriod(context, { ...event, offset: -1 }),
           }
         case eventTypes.GO_DATE_VIEW:
           return {

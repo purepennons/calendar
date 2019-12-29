@@ -41,7 +41,7 @@ const defaultProps = {
 }
 
 const Header = styled.strong`
-  font-weight: bold;
+  font-weight: ${props => props.theme.fonts.weight.bold};
 `
 
 function UnStyledBasicView(props) {

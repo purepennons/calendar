@@ -68,8 +68,9 @@ const CalendarWrapper = styled(UnStyledCalendarWrapper)`
 
     &__title {
       flex: 4;
-      font-size: ${props => props.theme.fonts.size.large};
       text-align: center;
+      font-size: ${props => props.theme.fonts.size.large};
+      font-weight: ${props => props.theme.fonts.weight.bold};
     }
 
     &__arrow {
