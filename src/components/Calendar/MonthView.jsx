@@ -6,6 +6,10 @@ import { noop } from 'lodash'
 
 import constants from '../../constants/'
 import BasicView from './BasicView'
+import Node from './Node'
+
+const NODE_WIDTH = constants.DATE_COLUMNS * constants.MONTH_COLUMNS * 2
+const NODE_HEIGHT = NODE_WIDTH
 
 const propTypes = {
   className: PropTypes.string,
@@ -66,7 +70,14 @@ function UnStyledMonthView(props) {
 UnStyledMonthView.propTypes = propTypes
 UnStyledMonthView.defaultProps = defaultProps
 
-const MonthView = styled(UnStyledMonthView)``
+const MonthView = styled(UnStyledMonthView)`
+  ${Node} {
+    > span {
+      width: ${`${NODE_WIDTH}px`};
+      height: ${`${NODE_HEIGHT}px`};
+    }
+  }
+`
 
 MonthView.propTypes = propTypes
 MonthView.defaultProps = defaultProps
