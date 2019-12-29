@@ -52,8 +52,10 @@ export function initDateView(ctx) {
 }
 
 export function selectDate(ctx, event) {
-  const { maxNodes } = ctx
+  const { maxNodes, onSelect } = ctx
   const date = event.date
+
+  onSelect(date)
 
   return {
     ...ctx,
@@ -83,8 +85,10 @@ export function goMonth(ctx, event) {
 
 // monthView
 export function selectMonth(ctx, event) {
-  const { maxNodes } = ctx
+  const { maxNodes, onSelect } = ctx
   const date = event.date
+
+  onSelect(date)
 
   return {
     ...ctx,
@@ -111,7 +115,10 @@ export function goYear(ctx, event) {
 
 // yearView
 export function selectYear(ctx, event) {
+  const { onSelect } = ctx
   const date = event.date
+
+  onSelect(date)
 
   return {
     ...ctx,

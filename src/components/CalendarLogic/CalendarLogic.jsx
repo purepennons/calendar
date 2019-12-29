@@ -2,7 +2,7 @@ import { useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { noop } from 'lodash'
 
-import constants from '../../constants/'
+import constants from '../../constants'
 
 import * as eventTypes from './eventTypes'
 import * as stateTypes from './stateTypes'
@@ -16,7 +16,7 @@ const propTypes = {
   maxMonthNodes: PropTypes.number,
   maxYearNodes: PropTypes.number,
   yearPeriod: PropTypes.number,
-  onChange: PropTypes.func,
+  onSelect: PropTypes.func,
 }
 
 const defaultProps = {
@@ -24,7 +24,7 @@ const defaultProps = {
   maxMonthNodes: constants.MONTH_COLUMNS * constants.MONTH_ROWS,
   maxYearNodes: constants.YEAR_COLUMNS * constants.YEAR_ROWS,
   yearPeriod: constants.YEAR_PERIOD,
-  onChange: noop,
+  onSelect: noop,
 }
 
 function CalendarLogic(props) {
@@ -35,6 +35,7 @@ function CalendarLogic(props) {
     maxMonthNodes,
     maxYearNodes,
     yearPeriod,
+    onSelect,
   } = props
   const initialState = {
     status: stateTypes.dateView,
@@ -50,6 +51,7 @@ function CalendarLogic(props) {
       period: {
         year: yearPeriod,
       },
+      onSelect,
     },
   }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { noop } from 'lodash'
 
 import constants from '../../constants/'
 import CalendarLogic from '../CalendarLogic/'
@@ -8,18 +9,22 @@ import MonthView from './MonthView'
 import YearView from './YearView'
 
 const propTypes = {
+  /** The prefix of the name attribute. */
   name: PropTypes.string,
+  /** */
   date: PropTypes.instanceOf(Date),
   defaultDate: PropTypes.instanceOf(Date),
+  onSelect: PropTypes.func,
 }
 
 const defaultProps = {
   name: '',
   defaultDate: new Date(),
+  onSelect: noop,
 }
 
 function Calendar(props) {
-  const { name, date, defaultDate } = props
+  const { name, date, defaultDate, onSelect } = props
 
   return (
     <CalendarLogic
@@ -28,6 +33,7 @@ function Calendar(props) {
       maxDateNodes={constants.DATE_COLUMNS * constants.DATE_ROWS}
       maxMonthNodes={constants.MONTH_COLUMNS * constants.MONTH_ROWS}
       maxYearNodes={constants.YEAR_COLUMNS * constants.YEAR_ROWS}
+      onSelect={onSelect}
     >
       {({ status, context, stateTypes, eventTypes, dispatch }) => {
         switch (status) {
