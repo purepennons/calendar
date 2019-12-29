@@ -1,20 +1,35 @@
-import { range } from 'lodash'
-import { pipe, slice, map } from 'lodash/fp'
+import { get, range } from 'lodash'
+import { pipe, slice, curry } from 'lodash/fp'
 import {
-  getDaysInMonth,
-  getYear,
-  getDate,
+  format,
   getDay,
+  getYear,
+  getMonth,
+  getDate,
+  getDaysInMonth,
+  isSameDay,
   addMonths,
   addYears,
 } from 'date-fns'
 
-const today = new Date()
-const dateOfToday = getDate(today)
+const formatTokenMap = {
+  date: 'd',
+  month: 'MMM',
+  year: 'yyyy',
+}
 
-// basic date utils
+export const today = new Date()
+
 export function rangeIncludeLast(start, end) {
   return range(start, end + 1)
+}
+
+export function getDatePairs(date) {
+  return {
+    year: getYear(date),
+    month: getMonth(date),
+    day: getDate(date),
+  }
 }
 
 export function getDateList(date) {
@@ -22,7 +37,7 @@ export function getDateList(date) {
 }
 
 export function getMonthList() {
-  return rangeIncludeLast(1, 12)
+  return range(0, 12)
 }
 
 export function getYearList(date, { period = 10 } = { period: 10 }) {
@@ -31,84 +46,121 @@ export function getYearList(date, { period = 10 } = { period: 10 }) {
   return range(period * base, period * (base + 1))
 }
 
-export function getDateListPair(date) {
+export function getDatesFromDateList(date) {
+  const { year, month } = getDatePairs(date)
+  return getDateList(date).map(day => new Date(year, month, day))
+}
+
+export function getDatesFromMonthList(date) {
+  const { year, day } = getDatePairs(date)
+  return getMonthList(date).map(month => new Date(year, month, day))
+}
+
+export function getDatesFromYearList(date, { period = 10 } = { period: 10 }) {
+  const { month, day } = getDatePairs(date)
+  return getYearList(date, { period }).map(year => new Date(year, month, day))
+}
+
+export function getSiblingDatesPairsByMonth(date) {
   return {
-    prev: getDateList(addMonths(date, -1)),
-    curr: getDateList(date),
-    next: getDateList(addMonths(date, 1)),
+    prev: getDatesFromDateList(addMonths(date, -1)),
+    curr: getDatesFromDateList(date),
+    next: getDatesFromDateList(addMonths(date, 1)),
   }
 }
 
-export function getYearListPair(date, { period = 10 } = { period: 10 }) {
+export function getSiblingDatesPairsByYear(
+  date,
+  { period = 10 } = { period: 10 }
+) {
   const options = { period }
 
   return {
-    prev: getYearList(addYears(date, -1), options),
-    curr: getYearList(date, options),
-    next: getYearList(addYears(date, 1), options),
+    prev: getDatesFromYearList(addYears(date, -1), options),
+    curr: getDatesFromYearList(date, options),
+    next: getDatesFromYearList(addYears(date, 1), options),
   }
 }
 
 // CalendarLogic
-export function convertListToNode(list) {
-  return list.map(value => ({ value, label: String(value) }))
-}
+export const convertListToNode = curry(function convertListToNode(
+  formatToken,
+  list
+) {
+  return list.map(date => ({
+    value: date,
+    label: formatToken ? format(date, formatToken) : String(date),
+  }))
+})
 
-export function disableList(list) {
+export function decorateDisabled(list) {
   return list.map(obj => ({ ...obj, disabled: true }))
 }
 
+function decorateMarked(nodes) {
+  return nodes.map(node =>
+    isSameDay(today, node.value) ? { ...node, isMarked: true } : node
+  )
+}
+
+const decorateActive = curry((selectedDate, nodes) =>
+  nodes.map(node =>
+    isSameDay(selectedDate, node.value) ? { ...node, isActive: true } : node
+  )
+)
+
+const decorateNodes = curry((selectedDate, nodes) =>
+  pipe(decorateMarked, decorateActive(selectedDate))(nodes)
+)
+
 // CalendarLogic - date
-export function getPrevDateNodes({ prevDateList, startIndex }) {
+export function getPrevDateNodes({ prevDates, startIndex }) {
   return pipe(
-    convertListToNode,
-    slice(prevDateList.length - startIndex, prevDateList.length),
-    disableList
-  )(prevDateList)
+    slice(Math.max(prevDates.length - startIndex, 0), prevDates.length),
+    convertListToNode(formatTokenMap.date),
+    decorateDisabled
+  )(prevDates)
 }
 
 export function getNextDateNodes({
-  nextDateList,
-  currDateList,
-  prevDateList,
+  nextDates,
+  currDates,
+  prevDates,
   startIndex,
   maxNodes,
 }) {
   return pipe(
-    convertListToNode,
     slice(
       0,
       maxNodes -
-        currDateList.length -
-        getPrevDateNodes({ prevDateList, startIndex }).length
+        currDates.length -
+        getPrevDateNodes({ prevDates, startIndex }).length
     ),
-    disableList
-  )(nextDateList)
+    convertListToNode(formatTokenMap.date),
+    decorateDisabled
+  )(nextDates)
 }
 
-export function getCurrentDateNodes({ currDateList }) {
+export function getCurrentDateNodes({ currDates, selectedDate }) {
   return pipe(
-    convertListToNode,
-    map(node =>
-      dateOfToday === node.value ? { ...node, isMarked: true } : node
-    )
-  )(currDateList)
+    convertListToNode(formatTokenMap.date),
+    decorateNodes(selectedDate)
+  )(currDates)
 }
 
-export function getDateNodes(date, { maxNodes }) {
+export function getDateNodes(date, { maxNodes, selectedDate }) {
   const {
-    prev: prevDateList,
-    curr: currDateList,
-    next: nextDateList,
-  } = getDateListPair(date)
-  const startIndex = getDay(date)
-
-  const prevNodes = getPrevDateNodes({ prevDateList, startIndex })
-  const currentNodes = getCurrentDateNodes({ currDateList })
+    prev: prevDates,
+    curr: currDates,
+    next: nextDates,
+  } = getSiblingDatesPairsByMonth(date)
+  const startIndex = getDay(get(currDates, [0], prevDates.length))
+  const prevNodes = getPrevDateNodes({ prevDates, startIndex })
+  const currentNodes = getCurrentDateNodes({ currDates, selectedDate })
   const nextNodes = getNextDateNodes({
-    nextDateList,
-    currDateList,
-    prevDateList,
+    nextDates,
+    currDates,
+    prevDates,
     startIndex,
     maxNodes,
   })
@@ -117,30 +169,39 @@ export function getDateNodes(date, { maxNodes }) {
 }
 
 // CalendarLogic - month
-export function getMonthNodes() {
-  return convertListToNode(getMonthList())
+export function getMonthNodes(date, { selectedDate }) {
+  return pipe(
+    getDatesFromMonthList,
+    convertListToNode(formatTokenMap.month),
+    decorateNodes(selectedDate)
+  )(date)
 }
 
 // CalendarLogic - year
-export function getYearNodes(date, { maxNodes, period = 10 }) {
+export function getYearNodes(date, { selectedDate, maxNodes, period = 10 }) {
   const {
-    prev: prevYearList,
-    curr: currYearList,
-    next: nextYearList,
-  } = getYearListPair(date, { period })
-  const numOfLeftSideDisabled = Math.floor((maxNodes - currYearList.length) / 2)
-  const prevNodes = pipe(
-    convertListToNode,
-    slice(prevYearList.length - numOfLeftSideDisabled, prevYearList.length),
-    disableList
-  )(prevYearList)
+    prev: prevDates,
+    curr: currDates,
+    next: nextDates,
+  } = getSiblingDatesPairsByYear(date, { period })
 
-  const currentNodes = convertListToNode(currYearList)
+  const numOfLeftSideDisabled = Math.floor((maxNodes - currDates.length) / 2)
+  const prevNodes = pipe(
+    convertListToNode(formatTokenMap.year),
+    slice(prevDates.length - numOfLeftSideDisabled, prevDates.length),
+    decorateDisabled
+  )(prevDates)
+
+  const currentNodes = pipe(
+    convertListToNode(formatTokenMap.year),
+    decorateNodes(selectedDate)
+  )(currDates)
+
   const nextNodes = pipe(
-    convertListToNode,
-    slice(0, maxNodes - currYearList.length - numOfLeftSideDisabled),
-    disableList
-  )(nextYearList)
+    convertListToNode(formatTokenMap.year),
+    slice(0, maxNodes - currDates.length - numOfLeftSideDisabled),
+    decorateDisabled
+  )(nextDates)
 
   return prevNodes.concat(currentNodes).concat(nextNodes)
 }
