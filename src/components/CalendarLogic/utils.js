@@ -8,6 +8,8 @@ import {
   getDate,
   getDaysInMonth,
   isSameDay,
+  isSameMonth,
+  isSameYear,
   addMonths,
   addYears,
 } from 'date-fns'
@@ -93,24 +95,20 @@ export const convertListToNode = curry(function convertListToNode(
   }))
 })
 
-export function decorateDisabled(list) {
-  return list.map(obj => ({ ...obj, disabled: true }))
+export function decorateDisabled(nodes) {
+  return nodes.map(obj => ({ ...obj, disabled: true }))
 }
 
-function decorateMarked(nodes) {
-  return nodes.map(node =>
-    isSameDay(today, node.value) ? { ...node, isMarked: true } : node
+const decorateMarked = curry((isEqualFn, nodes) =>
+  nodes.map(node =>
+    isEqualFn(today, node.value) ? { ...node, isMarked: true } : node
   )
-}
+)
 
 const decorateActive = curry((selectedDate, nodes) =>
   nodes.map(node =>
     isSameDay(selectedDate, node.value) ? { ...node, isActive: true } : node
   )
-)
-
-const decorateNodes = curry((selectedDate, nodes) =>
-  pipe(decorateMarked, decorateActive(selectedDate))(nodes)
 )
 
 // CalendarLogic - date
@@ -144,7 +142,8 @@ export function getNextDateNodes({
 export function getCurrentDateNodes({ currDates, selectedDate }) {
   return pipe(
     convertListToNode(formatTokenMap.date),
-    decorateNodes(selectedDate)
+    decorateMarked(isSameDay),
+    decorateActive(selectedDate)
   )(currDates)
 }
 
@@ -173,7 +172,8 @@ export function getMonthNodes(date, { selectedDate }) {
   return pipe(
     getDatesFromMonthList,
     convertListToNode(formatTokenMap.month),
-    decorateNodes(selectedDate)
+    decorateMarked(isSameMonth),
+    decorateActive(selectedDate)
   )(date)
 }
 
@@ -194,7 +194,8 @@ export function getYearNodes(date, { selectedDate, maxNodes, period = 10 }) {
 
   const currentNodes = pipe(
     convertListToNode(formatTokenMap.year),
-    decorateNodes(selectedDate)
+    decorateMarked(isSameYear),
+    decorateActive(selectedDate)
   )(currDates)
 
   const nextNodes = pipe(
