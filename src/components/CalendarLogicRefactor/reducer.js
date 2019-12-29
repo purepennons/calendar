@@ -42,11 +42,63 @@ function reducer(state, event) {
     }
 
     case stateTypes.monthView: {
-      return state
+      switch (event.type) {
+        case eventTypes.SELECT_MONTH:
+          return {
+            status: stateTypes.dateView,
+            context: actions.selectMonth(context, event),
+          }
+        case eventTypes.GO_NEXT_YEAR:
+          return {
+            status: stateTypes.monthView,
+            context: actions.goYear(context, { ...event, offset: 1 }),
+          }
+        case eventTypes.GO_PREV_YEAR:
+          return {
+            status: stateTypes.monthView,
+            context: actions.goYear(context, { ...event, offset: -1 }),
+          }
+        case eventTypes.GO_YEAR_VIEW:
+          return {
+            status: stateTypes.yearView,
+            context: actions.recalculateNodes(context, {
+              ...event,
+              status: stateTypes.yearView,
+            }),
+          }
+        default:
+          return state
+      }
     }
 
     case stateTypes.yearView: {
-      return state
+      switch (event.type) {
+        case eventTypes.SELECT_YEAR:
+          return {
+            status: stateTypes.monthView,
+            context: actions.selectYear(context, event),
+          }
+        case eventTypes.GO_NEXT_PERIOD:
+          return {
+            status: stateTypes.yearView,
+            context: actions.goPeriod(context, { ...event, offset: 1 }),
+          }
+        case eventTypes.GO_PREV_PERIOD:
+          return {
+            status: stateTypes.yearView,
+            context: actions.goPeriod(context, { ...event, offset: 1 }),
+          }
+        case eventTypes.GO_DATE_VIEW:
+          return {
+            status: stateTypes.dateView,
+            context: actions.recalculateNodes(context, {
+              ...event,
+              status: stateTypes.dateView,
+            }),
+          }
+        default:
+          return state
+      }
     }
 
     default:

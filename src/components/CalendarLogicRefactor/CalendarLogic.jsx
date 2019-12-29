@@ -15,6 +15,7 @@ const propTypes = {
   maxDateNodes: PropTypes.number,
   maxMonthNodes: PropTypes.number,
   maxYearNodes: PropTypes.number,
+  yearPeriod: PropTypes.number,
   onChange: PropTypes.func,
 }
 
@@ -22,11 +23,19 @@ const defaultProps = {
   maxDateNodes: constants.DATE_COLUMNS * constants.DATE_ROWS,
   maxMonthNodes: constants.MONTH_COLUMNS * constants.MONTH_ROWS,
   maxYearNodes: constants.YEAR_COLUMNS * constants.YEAR_ROWS,
+  yearPeriod: constants.YEAR_PERIOD,
   onChange: noop,
 }
 
 function CalendarLogic(props) {
-  const { date, defaultDate, maxDateNodes, maxMonthNodes, maxYearNodes } = props
+  const {
+    date,
+    defaultDate,
+    maxDateNodes,
+    maxMonthNodes,
+    maxYearNodes,
+    yearPeriod,
+  } = props
   const initialState = {
     status: stateTypes.dateView,
     context: {
@@ -37,6 +46,9 @@ function CalendarLogic(props) {
         date: maxDateNodes,
         month: maxMonthNodes,
         year: maxYearNodes,
+      },
+      period: {
+        year: yearPeriod,
       },
     },
   }
