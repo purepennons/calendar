@@ -20,14 +20,13 @@ const defaultProps = {
 }
 
 function UnStyledNode(props) {
-  const { className, name, value, label, disabled, isActive, onChange } = props
+  const { className, name, value, label, disabled, onChange } = props
   return (
     <label className={className}>
       <input
         type="radio"
         name={name}
         value={value}
-        checked={!disabled && isActive}
         disabled={disabled}
         onChange={onChange}
       />
@@ -44,8 +43,8 @@ const activeStyle = cssHelper`
   > span {
     background: ${props => props.theme.colors.primary};
     color: ${props => props.theme.colors.white};
+    font-weight: ${props => props.theme.fonts.weight.bold};
     border-radius: 50%;
-    font-weight: bold;
   }
 `
 
