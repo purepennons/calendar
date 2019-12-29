@@ -40,8 +40,22 @@ UnStyledNode.propTypes = propTypes
 UnStyledNode.defaultProps = defaultProps
 
 // style
+const activeStyle = cssHelper`
+  > span {
+    background: ${props => props.theme.colors.primary};
+    color: ${props => props.theme.colors.white};
+    border-radius: 50%;
+    font-weight: bold;
+  }
+`
+
 const markedStyle = cssHelper`
   color: ${props => props.theme.colors.primary};
+`
+
+const disabledStyle = cssHelper`
+  color: ${props => props.theme.colors.disabled};
+  cursor: not-allowed;
 `
 
 const Node = styled(UnStyledNode)`
@@ -63,18 +77,9 @@ const Node = styled(UnStyledNode)`
     display: none;
   }
 
-  > input:checked ~ span {
-    background: ${props => props.theme.colors.primary};
-    color: ${props => props.theme.colors.white};
-    border-radius: 50%;
-  }
-
-  > input:disabled ~ span {
-    color: ${props => props.theme.colors.disabled};
-    cursor: not-allowed;
-  }
-
+  ${props => !props.disabled && props.isActive && activeStyle};
   ${props => !props.disabled && props.isMarked && markedStyle};
+  ${props => props.disabled && disabledStyle};
 `
 
 Node.propTypes = propTypes

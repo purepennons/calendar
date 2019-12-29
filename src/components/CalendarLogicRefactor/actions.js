@@ -14,9 +14,16 @@ export function initDateView(ctx) {
 }
 
 export function selectDate(ctx, event) {
+  const { maxNodes } = ctx
+  const date = event.payload
+
   return {
     ...ctx,
     internalDate: event.payload,
     selectedDate: event.payload,
+    nodes: getDateNodes(date, {
+      selectedDate: date,
+      maxNodes: maxNodes.date,
+    }),
   }
 }

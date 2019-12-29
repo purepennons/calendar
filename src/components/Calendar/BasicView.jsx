@@ -11,6 +11,7 @@ const propTypes = {
   columns: PropTypes.number.isRequired,
   rows: PropTypes.number.isRequired,
   groupName: PropTypes.string.isRequired,
+  title: PropTypes.string,
   headers: PropTypes.arrayOf(PropTypes.string),
   /** Only pick the first `${columns * rows}` elements. */
   nodes: PropTypes.arrayOf(
@@ -32,6 +33,7 @@ const propTypes = {
 
 const defaultProps = {
   className: '',
+  title: '',
   headers: [],
   onSelect: noop,
   onNextClick: noop,
@@ -49,17 +51,27 @@ function UnStyledBasicView(props) {
     columns,
     rows,
     groupName,
+    title,
     headers,
     nodes,
     onSelect,
+    onPrevClick,
+    onNextClick,
+    onTitleClick,
   } = props
   const maxNodes = columns * rows
   const onNodeChange = event => {
-    onSelect(event.target.value)
+    onSelect(new Date(event.target.value))
   }
 
   return (
-    <CalendarWrapper className={className}>
+    <CalendarWrapper
+      className={className}
+      title={title}
+      onPrevClick={onPrevClick}
+      onNextClick={onNextClick}
+      onTitleClick={onTitleClick}
+    >
       <div className="view-container">
         {toArray(headers)
           .slice(0, columns)

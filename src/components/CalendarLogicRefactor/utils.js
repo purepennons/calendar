@@ -1,4 +1,4 @@
-import { range } from 'lodash'
+import { get, range } from 'lodash'
 import { pipe, slice, map, curry } from 'lodash/fp'
 import {
   format,
@@ -96,7 +96,7 @@ export function disableList(list) {
 // CalendarLogic - date
 export function getPrevDateNodes({ prevDates, startIndex }) {
   return pipe(
-    slice(prevDates.length - startIndex, prevDates.length),
+    slice(Math.max(prevDates.length - startIndex, 0), prevDates.length),
     convertListToNode(formatTokenMap.date),
     disableList
   )(prevDates)
@@ -139,7 +139,7 @@ export function getDateNodes(date, { maxNodes, selectedDate }) {
     curr: currDates,
     next: nextDates,
   } = getSiblingDatesPairsByMonth(date)
-  const startIndex = getDay(date)
+  const startIndex = getDay(get(currDates, [0], prevDates.length))
   const prevNodes = getPrevDateNodes({ prevDates, startIndex })
   const currentNodes = getCurrentDateNodes({ currDates, selectedDate })
   const nextNodes = getNextDateNodes({

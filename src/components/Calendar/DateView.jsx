@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { format } from 'date-fns'
 
+import constants from '../../constants/'
 import BasicView from './BasicView'
 
-export const COLUMNS = 7
-export const ROWS = 6
 const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 
 const propTypes = {
@@ -38,6 +38,7 @@ function UnStyledDateView(props) {
   const {
     className,
     name,
+    date,
     nodes,
     onSelect,
     onPrev,
@@ -46,10 +47,11 @@ function UnStyledDateView(props) {
   } = props
   return (
     <BasicView
+      title={format(date, 'MMMyyyy')}
       groupName={`date-view-${name}`}
       className={className}
-      columns={COLUMNS}
-      rows={ROWS}
+      columns={constants.DATE_COLUMNS}
+      rows={constants.DATE_ROWS}
       headers={DAYS}
       nodes={nodes}
       onSelect={onSelect}
