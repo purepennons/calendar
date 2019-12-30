@@ -9,13 +9,21 @@ import * as stateTypes from './stateTypes'
 import reducer from './reducer'
 
 const propTypes = {
+  /** All render props will be injected to the function. */
   children: PropTypes.func.isRequired,
+  /** Current date, for controlled component. */
   date: PropTypes.instanceOf(Date),
+  /** Default date, for uncontrolled component. */
   defaultDate: PropTypes.instanceOf(Date),
+  /** A number that defines the max length of nodes in the date view. */
   maxDateNodes: PropTypes.number,
+  /** A number that defines the max length of nodes in the month view. */
   maxMonthNodes: PropTypes.number,
+  /** A number that defines the max length of nodes in the year view. */
   maxYearNodes: PropTypes.number,
+  /** A number that defines how many offset between each page. */
   yearPeriod: PropTypes.number,
+  /** A handler which is invoked when a date is selected */
   onSelect: PropTypes.func,
 }
 

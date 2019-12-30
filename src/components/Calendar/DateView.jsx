@@ -14,8 +14,11 @@ const NODE_HEIGHT = NODE_WIDTH
 
 const propTypes = {
   className: PropTypes.string,
+  /** A postfix name for the `<Node>` name. */
   name: PropTypes.string,
+  /** Current date. */
   date: PropTypes.instanceOf(Date).isRequired,
+  /** An array that contains all the nodes which need to be rendered. It contains the disabled, marked and active nodes also. */
   nodes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -26,9 +29,13 @@ const propTypes = {
       isMarked: PropTypes.bool,
     })
   ).isRequired,
+  /** A handler which is invoked when a date is selected */
   onSelect: PropTypes.func,
+  /** A handler which is invoked when the left side button is clicked. */
   onPrev: PropTypes.func,
+  /** A handler which is invoked when the right side button is clicked. */
   onNext: PropTypes.func,
+  /** A handler which is invoked when the title is clicked. */
   onTitleClick: PropTypes.func,
 }
 
