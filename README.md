@@ -2,9 +2,10 @@
 
 ## Preview
 
-|                     DateView                      |                     MonthView                      |                     YearView                      |
-| :-----------------------------------------------: | :------------------------------------------------: | :-----------------------------------------------: |
-| ![](./docs/images/calendar_preview_date_view.png) | ![](./docs/images/calendar_preview_month_view.png) | ![](./docs/images/calendar_preview_year_view.png) |
+|        |                         DateView                         |                         MonthView                         |                         YearView                         |
+| :----: | :------------------------------------------------------: | :-------------------------------------------------------: | :------------------------------------------------------: |
+|   PC   |    ![](./docs/images/calendar_preview_date_view.png)     |    ![](./docs/images/calendar_preview_month_view.png)     |    ![](./docs/images/calendar_preview_year_view.png)     |
+| Mobile | ![](./docs/images/calendar_preview_date_view_mobile.png) | ![](./docs/images/calendar_preview_month_view_mobile.png) | ![](./docs/images/calendar_preview_year_view_mobile.png) |
 
 ## Description
 
