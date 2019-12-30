@@ -7,6 +7,11 @@
 |   PC   |    ![](./docs/images/calendar_preview_date_view.png)     |    ![](./docs/images/calendar_preview_month_view.png)     |    ![](./docs/images/calendar_preview_year_view.png)     |
 | Mobile | ![](./docs/images/calendar_preview_date_view_mobile.png) | ![](./docs/images/calendar_preview_month_view_mobile.png) | ![](./docs/images/calendar_preview_year_view_mobile.png) |
 
+## Environment
+
+- yarn 1.9.4
+- node 12.13.1
+
 ## Installation
 
 ```
