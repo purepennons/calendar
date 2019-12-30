@@ -11,9 +11,11 @@ import YearView from './YearView'
 const propTypes = {
   /** The prefix of the name attribute. */
   name: PropTypes.string,
-  /** */
+  /** Current date, for controlled component. */
   date: PropTypes.instanceOf(Date),
+  /** Default date, for uncontrolled component. */
   defaultDate: PropTypes.instanceOf(Date),
+  /** The handler will be invoked with a date argument when a date is selected */
   onSelect: PropTypes.func,
 }
 

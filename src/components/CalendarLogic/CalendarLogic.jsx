@@ -72,4 +72,5 @@ function CalendarLogic(props) {
 CalendarLogic.propTypes = propTypes
 CalendarLogic.defaultProps = defaultProps
 
+/** @component */
 export default CalendarLogic
