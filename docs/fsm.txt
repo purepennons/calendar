@@ -1,0 +1,207 @@
+{
+	id: 'Calendar',
+	initial: 'dateView',
+	states: {
+		dateView: {
+			on: {
+				INIT_DATE_VIEW: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getDateNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.dateView'
+						]
+					}
+				],
+				SELECT_DATE: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getDateNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.dateView'
+						]
+					}
+				],
+				GO_NEXT_MONTH: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getDateNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.dateView'
+						]
+					}
+				],
+				GO_MONTH_VIEW: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getMonthNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.monthView'
+						]
+					}
+				],
+				GO_PREV_MONTH: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getDateNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.dateView'
+						]
+					}
+				]
+			},
+			states: {},
+			order: 0
+		},
+		monthView: {
+			on: {
+				SELECT_MONTH: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getDateNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.dateView'
+						]
+					}
+				],
+				GO_NEXT_YEAR: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getMonthNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.monthView'
+						]
+					}
+				],
+				GO_PREV_YEAR: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getMonthNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.monthView'
+						]
+					}
+				],
+				GO_YEAR_VIEW: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getYearNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.yearView'
+						]
+					}
+				]
+			},
+			states: {},
+			order: 1
+		},
+		yearView: {
+			on: {
+				SELECT_YEAR: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getMonthNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.monthView'
+						]
+					}
+				],
+				GO_NEXT_PERIOD: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getYearNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.yearView'
+						]
+					}
+				],
+				GO_PREV_PERIOD: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getYearNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.yearView'
+						]
+					}
+				],
+				GO_DATE_VIEW: [
+					{
+						actions: [
+							{
+								type: 'ctx.nodes = getDateNodes()',
+								exec: undefined
+							}
+						],
+						cond: undefined,
+						target: [
+							'#Calendar.dateView'
+						]
+					}
+				]
+			},
+			states: {},
+			order: 2
+		}
+	},
+	on: {}
+}

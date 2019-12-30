@@ -65,6 +65,8 @@ The `<Calendar>` component can be divided to two parts, logic and views.
 
 ### Idea
 
+![](./docs/images/Calendar_FSM.png)
+
 The idea of implementation comes from the FSM (finite-state machine) and [`xstate`](https://xstate.js.org/). I implemented the basic version of FSM by creating a reducer with the two level `switch - case` The outer `switch - case` checks the current state (view) and the inner `switch - case` handles the real events. The following is an example.
 
 ```js
