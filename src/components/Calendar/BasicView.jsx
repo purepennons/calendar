@@ -60,7 +60,7 @@ function UnStyledBasicView(props) {
   } = props
   const maxNodes = columns * rows
   const onNodeChange = event => {
-    onSelect(new Date(event.target.value))
+    onSelect(event.target.value)
   }
 
   return (

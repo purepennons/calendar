@@ -18,7 +18,7 @@ const propTypes = {
   nodes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      value: PropTypes.any.isRequired,
+      value: PropTypes.instanceOf(Date).isRequired,
       label: PropTypes.string,
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,
@@ -62,6 +62,9 @@ function UnStyledYearView(props) {
     onNext,
     onTitleClick,
   } = props
+
+  const onYearSelect = dateStr => onSelect(new Date(dateStr))
+
   return (
     <BasicView
       title={getTitle(nodes)}
@@ -70,7 +73,7 @@ function UnStyledYearView(props) {
       columns={constants.YEAR_COLUMNS}
       rows={constants.YEAR_ROWS}
       nodes={nodes}
-      onSelect={onSelect}
+      onSelect={onYearSelect}
       onPrevClick={onPrev}
       onNextClick={onNext}
       onTitleClick={onTitleClick}

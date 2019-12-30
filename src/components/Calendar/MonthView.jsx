@@ -18,7 +18,7 @@ const propTypes = {
   nodes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      value: PropTypes.any.isRequired,
+      value: PropTypes.instanceOf(Date).isRequired,
       label: PropTypes.string,
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,
@@ -51,6 +51,9 @@ function UnStyledMonthView(props) {
     onNext,
     onTitleClick,
   } = props
+
+  const onMonthSelect = dateStr => onSelect(new Date(dateStr))
+
   return (
     <BasicView
       title={format(date, 'yyyy')}
@@ -59,7 +62,7 @@ function UnStyledMonthView(props) {
       columns={constants.MONTH_COLUMNS}
       rows={constants.MONTH_ROWS}
       nodes={nodes}
-      onSelect={onSelect}
+      onSelect={onMonthSelect}
       onPrevClick={onPrev}
       onNextClick={onNext}
       onTitleClick={onTitleClick}

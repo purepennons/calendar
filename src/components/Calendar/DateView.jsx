@@ -19,7 +19,7 @@ const propTypes = {
   nodes: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      value: PropTypes.any.isRequired,
+      value: PropTypes.instanceOf(Date).isRequired,
       label: PropTypes.string,
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,
@@ -52,6 +52,9 @@ function UnStyledDateView(props) {
     onNext,
     onTitleClick,
   } = props
+
+  const onDateSelect = dateStr => onSelect(new Date(dateStr))
+
   return (
     <BasicView
       title={format(date, 'MMM yyyy')}
@@ -61,7 +64,7 @@ function UnStyledDateView(props) {
       rows={constants.DATE_ROWS}
       headers={DAYS}
       nodes={nodes}
-      onSelect={onSelect}
+      onSelect={onDateSelect}
       onPrevClick={onPrev}
       onNextClick={onNext}
       onTitleClick={onTitleClick}
