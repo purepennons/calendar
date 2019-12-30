@@ -71,16 +71,16 @@ export function getSiblingDatesPairsByMonth(date) {
   }
 }
 
-export function getSiblingDatesPairsByYear(
+export function getSiblingDatesPairsByPeriod(
   date,
   { period = 10 } = { period: 10 }
 ) {
   const options = { period }
 
   return {
-    prev: getDatesFromYearList(addYears(date, -1), options),
+    prev: getDatesFromYearList(addYears(date, -1 * period), options),
     curr: getDatesFromYearList(date, options),
-    next: getDatesFromYearList(addYears(date, 1), options),
+    next: getDatesFromYearList(addYears(date, 1 * period), options),
   }
 }
 
@@ -183,7 +183,7 @@ export function getYearNodes(date, { selectedDate, maxNodes, period = 10 }) {
     prev: prevDates,
     curr: currDates,
     next: nextDates,
-  } = getSiblingDatesPairsByYear(date, { period })
+  } = getSiblingDatesPairsByPeriod(date, { period })
 
   const numOfLeftSideDisabled = Math.floor((maxNodes - currDates.length) / 2)
   const prevNodes = pipe(
