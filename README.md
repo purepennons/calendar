@@ -1,68 +1,61 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Trend Micro Frontend Task - Calendar
 
-## Available Scripts
+## Preview
 
-In the project directory, you can run:
+|                     DateView                      |                     MonthView                      |                     YearView                      |
+| :-----------------------------------------------: | :------------------------------------------------: | :-----------------------------------------------: |
+| ![](./docs/images/calendar_preview_date_view.png) | ![](./docs/images/calendar_preview_month_view.png) | ![](./docs/images/calendar_preview_year_view.png) |
 
-### `yarn start`
+## Description
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The `<Calendar>` component can be divided to two parts, logic and views.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Logic
 
-### `yarn test`
+- CalendarLogic
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Views
 
-### `yarn build`
+- DateView
+- MonthView
+- YearView
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+yarn
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Run in development mode
 
-### `yarn eject`
+### Demo page
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+yarn start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+And go to [`http://localhost:3000`](http://localhost:3000).
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Styleguide
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You can develop components in the styleguide page and preview in the real time.
 
-## Learn More
+```
+yarn styleguide
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+And go to [`http://localhost:6060`](http://localhost:6060).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Production build
 
-### Code Splitting
+### Demo page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```
+yarn buid
+```
 
-### Analyzing the Bundle Size
+### Styleguide
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+yarn styleguide:build
+```
