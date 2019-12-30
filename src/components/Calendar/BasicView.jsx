@@ -109,6 +109,7 @@ const BasicView = styled(UnStyledBasicView).attrs(props => ({
     display: flex;
     flex-flow: row wrap;
     flex: ${props => `1 0 ${props.nodeWidth}`};
+    margin: 20px 10px;
 
     &__node,
     &__header {
@@ -121,6 +122,16 @@ const BasicView = styled(UnStyledBasicView).attrs(props => ({
       flex-flow: row nowrap;
       justify-content: center;
       align-items: center;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .view-container {
+      ${Node} {
+        > span {
+          border-radius: 0;
+        }
+      }
     }
   }
 `

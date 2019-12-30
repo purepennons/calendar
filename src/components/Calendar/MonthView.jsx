@@ -77,6 +77,15 @@ const MonthView = styled(UnStyledMonthView)`
       height: ${`${NODE_HEIGHT}px`};
     }
   }
+
+  @media screen and (max-width: 640px) {
+    ${Node} {
+      > span {
+        width: ${`${NODE_WIDTH * 1.25}px`};
+        height: ${`${NODE_HEIGHT * 1.25}px`};
+      }
+    }
+  }
 `
 
 MonthView.propTypes = propTypes

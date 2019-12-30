@@ -79,6 +79,15 @@ const DateView = styled(UnStyledDateView)`
       height: ${`${NODE_HEIGHT}px`};
     }
   }
+
+  @media screen and (max-width: 640px) {
+    ${Node} {
+      > span {
+        width: ${`${NODE_WIDTH * 1.5}px`};
+        height: ${`${NODE_HEIGHT * 1.5}px`};
+      }
+    }
+  }
 `
 
 DateView.propTypes = propTypes
