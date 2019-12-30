@@ -5,6 +5,7 @@ import BasicView from './BasicView'
 const headers = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
 const nodes = range(1, 42 + 1).map(v => ({ value: v, label: String(v) }))
 ;<BasicView
+  title="Basic View"
   groupName="basic-view-example"
   columns={7}
   rows={6}
