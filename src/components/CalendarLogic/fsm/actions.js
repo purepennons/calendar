@@ -135,6 +135,6 @@ export const goPeriod = offset =>
 
 export const goNextPeriod = goPeriod(1)
 
-export const goPrevPeriod = goPeriod(1)
+export const goPrevPeriod = goPeriod(-1)
 
 export const goDateView = recalculateNodes(stateTypes.dateView)
