@@ -1,12 +1,12 @@
-import { useReducer, useEffect } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { noop } from 'lodash'
+import { useMachine } from '@xstate/react'
 
 import constants from '../../constants'
-
+import machine from './fsm/machine'
 import * as eventTypes from './eventTypes'
 import * as stateTypes from './stateTypes'
-import reducer from './reducer'
 
 const propTypes = {
   /** All render props will be injected to the function. */
@@ -45,35 +45,35 @@ function CalendarLogic(props) {
     yearPeriod,
     onSelect,
   } = props
-  const initialState = {
-    status: stateTypes.dateView,
-    context: {
-      internalDate: date || defaultDate || new Date(),
-      selectedDate: date || defaultDate || null,
-      nodes: [],
-      maxNodes: {
-        date: maxDateNodes,
-        month: maxMonthNodes,
-        year: maxYearNodes,
-      },
-      period: {
-        year: yearPeriod,
-      },
-      onSelect,
+
+  const initialContext = {
+    internalDate: date || defaultDate || new Date(),
+    selectedDate: date || defaultDate || null,
+    nodes: [],
+    maxNodes: {
+      date: maxDateNodes,
+      month: maxMonthNodes,
+      year: maxYearNodes,
     },
+    period: {
+      year: yearPeriod,
+    },
+    onSelect,
   }
 
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [current, send] = useMachine(machine, { context: initialContext })
 
   useEffect(() => {
-    dispatch({ type: eventTypes.INIT_DATE_VIEW })
-  }, [])
+    send({ type: eventTypes.INIT_DATE_VIEW })
+  }, [send])
 
   return props.children({
-    ...state,
-    dispatch,
+    ...current,
+    send,
     stateTypes,
     eventTypes,
+    status: current.value,
+    dispatch: send,
   })
 }
 
