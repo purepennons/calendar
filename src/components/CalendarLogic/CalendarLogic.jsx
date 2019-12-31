@@ -68,12 +68,12 @@ function CalendarLogic(props) {
   }, [send])
 
   return props.children({
-    ...current,
     current,
     send,
     stateTypes,
     eventTypes,
     status: current.value,
+    context: current.context,
     dispatch: send,
   })
 }
