@@ -4,6 +4,10 @@ The compoent is a render props based component. It provides the core logic of ca
 
 These are the arguments that are passed into the `children(renderProps)`.
 
+#### current
+
+An object comes from the xstate `current` object.
+
 #### status
 
 Present the current state (view).
@@ -12,7 +16,7 @@ Present the current state (view).
 
 The infinite states about calendar. It contains the following values.
 
-- internalDate: An core internal state that is used in the calendar.
+- internalDate: A core internal state that is used in the calendar.
 - selectedDate: The selected date.
 - nodes: An array that represents the current dates which could be injected to the corresponding views. Each node has the following properties. You can see the `DateView` or `MonthView` or `YearView` sections for details.
   - value
@@ -24,9 +28,13 @@ The infinite states about calendar. It contains the following values.
 - period: An object that describes which offsets are used in the `GO_NEXT_XXX` and `GO_PREV_XXX` events. Only year period is used currently.
 - onSelect: No need the function usually. It will be invoked automatically when a date is selected.
 
+#### send
+
+A function comes from the xstate `send` function.
+
 #### dispatch
 
-A function to trigger an event. This is from the `useReducer`.
+A alias of `send`.
 
 #### stateTypes
 
@@ -38,7 +46,7 @@ The one of the type will be the value of `status`. It contains the following sta
 
 #### eventTypes
 
-The values of the object are the event types. They are used for `dispatch` an `event`. A `event` must be a shape like `{ type: eventType, ...otherPayload }`. Just like an redux action.
+The values of the object are the event types. They are used for `dispatch` an `event`. A `event` must be a shape like `{ type: eventType, ...otherPayload }`. Just like a redux action.
 
 It contains the following types. Each event is belong to a `status` and only can be invoked when the `status` is matched.
 
