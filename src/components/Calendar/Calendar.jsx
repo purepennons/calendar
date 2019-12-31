@@ -47,51 +47,42 @@ function UnStyledCalendar(props) {
       maxYearNodes={constants.YEAR_COLUMNS * constants.YEAR_ROWS}
       onSelect={onSelect}
     >
-      {({ status, context, stateTypes, eventTypes, dispatch }) => {
-        const dateView =
-          status === stateTypes.dateView ? (
-            <DateView
-              name={name}
-              date={context.internalDate}
-              nodes={context.nodes}
-              onSelect={date =>
-                dispatch({ type: eventTypes.SELECT_DATE, date })
-              }
-              onPrev={() => dispatch({ type: eventTypes.GO_PREV_MONTH })}
-              onNext={() => dispatch({ type: eventTypes.GO_NEXT_MONTH })}
-              onTitleClick={() => dispatch({ type: eventTypes.GO_MONTH_VIEW })}
-            />
-          ) : null
+      {({ current, context, stateTypes, eventTypes, dispatch }) => {
+        const dateView = current.matches(stateTypes.dateView) ? (
+          <DateView
+            name={name}
+            date={context.internalDate}
+            nodes={context.nodes}
+            onSelect={date => dispatch({ type: eventTypes.SELECT_DATE, date })}
+            onPrev={() => dispatch({ type: eventTypes.GO_PREV_MONTH })}
+            onNext={() => dispatch({ type: eventTypes.GO_NEXT_MONTH })}
+            onTitleClick={() => dispatch({ type: eventTypes.GO_MONTH_VIEW })}
+          />
+        ) : null
 
-        const monthView =
-          status === stateTypes.monthView ? (
-            <MonthView
-              name={name}
-              date={context.internalDate}
-              nodes={context.nodes}
-              onSelect={date =>
-                dispatch({ type: eventTypes.SELECT_MONTH, date })
-              }
-              onPrev={() => dispatch({ type: eventTypes.GO_PREV_YEAR })}
-              onNext={() => dispatch({ type: eventTypes.GO_NEXT_YEAR })}
-              onTitleClick={() => dispatch({ type: eventTypes.GO_YEAR_VIEW })}
-            />
-          ) : null
+        const monthView = current.matches(stateTypes.monthView) ? (
+          <MonthView
+            name={name}
+            date={context.internalDate}
+            nodes={context.nodes}
+            onSelect={date => dispatch({ type: eventTypes.SELECT_MONTH, date })}
+            onPrev={() => dispatch({ type: eventTypes.GO_PREV_YEAR })}
+            onNext={() => dispatch({ type: eventTypes.GO_NEXT_YEAR })}
+            onTitleClick={() => dispatch({ type: eventTypes.GO_YEAR_VIEW })}
+          />
+        ) : null
 
-        const yearView =
-          status === stateTypes.yearView ? (
-            <YearView
-              name={name}
-              date={context.internalDate}
-              nodes={context.nodes}
-              onSelect={date =>
-                dispatch({ type: eventTypes.SELECT_YEAR, date })
-              }
-              onPrev={() => dispatch({ type: eventTypes.GO_PREV_PERIOD })}
-              onNext={() => dispatch({ type: eventTypes.GO_NEXT_PERIOD })}
-              onTitleClick={() => dispatch({ type: eventTypes.GO_DATE_VIEW })}
-            />
-          ) : null
+        const yearView = current.matches(stateTypes.yearView) ? (
+          <YearView
+            name={name}
+            date={context.internalDate}
+            nodes={context.nodes}
+            onSelect={date => dispatch({ type: eventTypes.SELECT_YEAR, date })}
+            onPrev={() => dispatch({ type: eventTypes.GO_PREV_PERIOD })}
+            onNext={() => dispatch({ type: eventTypes.GO_NEXT_PERIOD })}
+            onTitleClick={() => dispatch({ type: eventTypes.GO_DATE_VIEW })}
+          />
+        ) : null
 
         return (
           <div className={className} name={name} data-testid={name}>

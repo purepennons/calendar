@@ -69,6 +69,7 @@ function CalendarLogic(props) {
 
   return props.children({
     ...current,
+    current,
     send,
     stateTypes,
     eventTypes,
